@@ -16,10 +16,12 @@ public class Main extends Script {
     @Override
     public void onStart(){
         tasks.add(new WalkToLumbridgeStairsTask(this, "WALKING TO STAIRS..."));
+        tasks.add(new WearBraceletTask(this, "WEARING BRACELET..."));
         tasks.add(new ClimbingStairsTask(this, "CLIMBING STAIRS..."));
         tasks.add(new OpenBankTask(this, "OPENING BANK..."));
-        tasks.add(new WithdrawTeleportTask(this, "GETTING AMULET..."));
+        tasks.add(new WithdrawTask(this, "GETTING AMULET..."));
         tasks.add(new TeleportingToRevCaveTask(this, "TELEPORTING TO LAVA MAZE..."));
+        tasks.add(new WalkToCaveTask(this, "WALKING TO CAVE..."));
         tasks.add(new EnterCaveTask(this, "ENTERING CAVE..."));
         tasks.add(new WalkToRevsTask(this, "WALKING TO REVS..."));
         tasks.add(new GatheringInformationTask(this, "GATHERING INFO..."));
@@ -33,6 +35,7 @@ public class Main extends Script {
             if (task.canProcess()) {
                 try {
                     task.process();
+                    log(task.getStatus());
                 } catch (InterruptedException e) {
                     log(e);
                 }

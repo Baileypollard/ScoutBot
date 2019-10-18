@@ -19,6 +19,8 @@ public class ClimbingStairsTask extends Task {
     @Override
     public void process() throws InterruptedException {
         RS2Object stairs = api.getObjects().closest("Staircase");
+        api.camera.toEntity(stairs);
+
         if (stairs.interact("Climb-up")) {
             new ConditionalSleep(2000) {
                 public boolean condition() throws InterruptedException {

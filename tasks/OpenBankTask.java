@@ -13,7 +13,7 @@ public class OpenBankTask extends Task {
     @Override
     public boolean canProcess() {
         return Loc.LUMBRIDGE_UPPER_FLOOR.getArea().contains(api.myPosition())
-                && !api.inventory.contains("Revenant cave teleport");
+                && !api.inventory.contains("Burning amulet(5)");
     }
 
     @Override

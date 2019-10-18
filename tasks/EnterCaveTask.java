@@ -21,6 +21,8 @@ public class EnterCaveTask extends Task {
     public void process() throws InterruptedException {
         RS2Object caveEntrance = api.getObjects().closest("Cavern");
 
+        api.camera.toEntity(caveEntrance);
+
         if (caveEntrance.interact("Enter")) {
             new ConditionalSleep(2000) {
                 public boolean condition() throws InterruptedException {

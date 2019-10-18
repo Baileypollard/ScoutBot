@@ -17,6 +17,8 @@ import org.osbot.rs07.event.WebWalkEvent;
 import org.osbot.rs07.script.MethodProvider;
 import org.osbot.rs07.utility.Condition;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,12 +27,8 @@ public class GatheringInformationTask extends Task {
     private List<Player> localPlayers;
 
     Position southRevs = new Position(3250, 10141, 0);
-    Position northRevs = new Position(3244, 10172, 0);
+    Position northRevs = new Position(3244, 10167, 0);
 
-    private Position[] infoPath = {
-            new Position(3244, 10178, 0), new Position(3244, 10168, 0), new Position(3246, 10156, 0),
-            new Position(3253, 10143, 0)
-    };
     public GatheringInformationTask(MethodProvider api, String name) {
         super(api, name);
         localPlayers = new ArrayList<>();
@@ -76,19 +74,32 @@ public class GatheringInformationTask extends Task {
         }
 
         List<Player> allPlayers = api.getPlayers().getAll();
-        for (Player player : allPlayers) {
-            if (isNewPlayer(player) && !api.myPlayer().getName().equals(player.getName())) {
-                String skulled = player.getSkullIcon() == 0 ? "**SKULLED**" : "";
-                String world = "W" + api.getWorlds().getCurrentWorld();
-                String message = world + " " + skulled + " " + player.getName() + " (" +
-                        player.getCombatLevel() + ") " + getOthersEquipment(player).toString();
-                api.log(message);
-                localPlayers.add(player);
-                webhook.setContent(message);
-                try {
-                    webhook.execute();
-                } catch (IOException e) {
-                    api.log(e.getLocalizedMessage());
+        for (Player player : allPlayers)
+        {
+            if (isNewPlayer(player) && !api.myPlayer().getName().equals(player.getName()))
+            {
+                if (player.getCombatLevel() > 35 && player.getCombatLevel() < 90)
+                {
+                    LocalDateTime myDateObj = LocalDateTime.now();
+                    System.out.println("Before formatting: " + myDateObj);
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("MMM dd HH:mm:ss");
+                    String formattedDate = myDateObj.format(myFormatObj);
+
+                    String skulled = player.getSkullIcon() == 0 ? "**SKULLED**" : "";
+                    String world = "[" + formattedDate + "] W" + api.getWorlds().getCurrentWorld();
+                    String message = world + " " + skulled + " " + player.getName() + " (" +
+                            player.getCombatLevel() + ") " + getOthersEquipment(player).toString();
+
+                    api.log(message);
+                    localPlayers.add(player);
+                    webhook.setContent(message);
+                    try
+                    {
+                        webhook.execute();
+                    } catch (IOException e)
+                    {
+                        api.log(e.getLocalizedMessage());
+                    }
                 }
             }
         }
