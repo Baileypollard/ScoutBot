@@ -24,7 +24,7 @@ public class Main extends Script {
         tasks.add(new WalkToCaveTask(this, "WALKING TO CAVE..."));
         tasks.add(new EnterCaveTask(this, "ENTERING CAVE..."));
         tasks.add(new WalkToRevsTask(this, "WALKING TO REVS..."));
-        tasks.add(new GatheringInformationTask(this, "GATHERING INFO..."));
+        tasks.add(new GatheringHoundInformationTask(this, "GATHERING INFO..."));
     }
 
 
