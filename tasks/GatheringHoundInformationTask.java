@@ -3,6 +3,7 @@ package tasks;
 import org.osbot.rs07.api.def.ItemDefinition;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.Player;
+import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.event.WebWalkEvent;
 import org.osbot.rs07.script.MethodProvider;
 import org.osbot.rs07.utility.Condition;
@@ -31,10 +32,19 @@ public class GatheringHoundInformationTask extends Task {
     public void process() throws InterruptedException {
         localPlayers = new ArrayList<>();
         DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/631977624641470464/otnghB7jkjvFoNRT89y9TzxJa6DwPJq1WZPesIEL_b_EwLMcHIUdZQ3tghVx2H7XWia9");
-        Position pos = new Position(3202, 10062, 0);
+        Position pos = new Position(3207, 10061, 0);
+        boolean cannonIsShown = false;
 
         if (!api.myPlayer().getPosition().equals(pos)) {
-            api.walking.webWalk(new Position(3202, 10062, 0));
+            api.walking.webWalk(pos);
+        }
+
+        List<RS2Object> objects = api.getObjects().getAll();
+
+        for (RS2Object object : objects) {
+            if (object.getName().equals("Dwarf multicannon")) {
+                cannonIsShown = true;
+            }
         }
 
         List<Player> allPlayers = api.getPlayers().getAll();
@@ -51,9 +61,9 @@ public class GatheringHoundInformationTask extends Task {
 
                     String skulled = player.getSkullIcon() == 0 ? "**SKULLED**" : "";
                     String world = "[" + formattedDate + "] W" + api.getWorlds().getCurrentWorld();
-                    String message = world + " " + skulled + " " + player.getName() + " (" +
+                    String cannon = cannonIsShown ? "CANNON" : "";
+                    String message = cannon + " "  + world + " " + skulled + " " + player.getName() + " (" +
                             player.getCombatLevel() + ") " + getOthersEquipment(player).toString();
-
                     api.log(message);
                     localPlayers.add(player);
                     webhook.setContent(message);
