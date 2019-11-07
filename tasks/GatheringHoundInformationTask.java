@@ -30,39 +30,42 @@ public class GatheringHoundInformationTask extends Task {
 
     @Override
     public void process() throws InterruptedException {
-        localPlayers = new ArrayList<>();
+        localPlayers.clear();
         DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/631977624641470464/otnghB7jkjvFoNRT89y9TzxJa6DwPJq1WZPesIEL_b_EwLMcHIUdZQ3tghVx2H7XWia9");
-        Position pos = new Position(3207, 10061, 0);
-        boolean cannonIsShown = false;
 
+        Position pos = new Position(3201, 10061, 0);
         if (!api.myPlayer().getPosition().equals(pos)) {
             api.walking.webWalk(pos);
         }
 
-        List<RS2Object> objects = api.getObjects().getAll();
-
-        for (RS2Object object : objects) {
-            if (object.getName().equals("Dwarf multicannon")) {
-                cannonIsShown = true;
-            }
-        }
+//        List<RS2Object> objects = api.getObjects().getAll();
+//        for (RS2Object object : objects) {
+//            if (object.getName().equals("Dwarf multicannon")) {
+////                webhook.setContent("W" + api.worlds.getCurrentWorld() + " CANNON");
+////                try
+////                {
+////                    webhook.execute();
+////                } catch (IOException e)
+////                {
+////                    api.log(e.getLocalizedMessage());
+////                }
+//            }
+//        }
 
         List<Player> allPlayers = api.getPlayers().getAll();
         for (Player player : allPlayers)
         {
             if (isNewPlayer(player) && !api.myPlayer().getName().equals(player.getName()))
             {
-                if (player.getCombatLevel() > 35 && player.getCombatLevel() < 90)
+                if (player.getCombatLevel() > 35 && player.getCombatLevel() <= 92)
                 {
                     LocalDateTime myDateObj = LocalDateTime.now();
-                    System.out.println("Before formatting: " + myDateObj);
                     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("MMM dd HH:mm:ss");
                     String formattedDate = myDateObj.format(myFormatObj);
 
                     String skulled = player.getSkullIcon() == 0 ? "**SKULLED**" : "";
                     String world = "[" + formattedDate + "] W" + api.getWorlds().getCurrentWorld();
-                    String cannon = cannonIsShown ? "CANNON" : "";
-                    String message = cannon + " "  + world + " " + skulled + " " + player.getName() + " (" +
+                    String message = world + " " + skulled + " " + player.getName() + " (" +
                             player.getCombatLevel() + ") " + getOthersEquipment(player).toString();
                     api.log(message);
                     localPlayers.add(player);
@@ -77,8 +80,8 @@ public class GatheringHoundInformationTask extends Task {
                 }
             }
         }
-        if (api.worlds.hopToP2PWorld()) {
-        }
+        api.worlds.hopToP2PWorld();
+        api.sleep(4000);
     }
 
     private List<String> getOthersEquipment(Player p) {
