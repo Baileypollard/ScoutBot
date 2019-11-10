@@ -1,10 +1,7 @@
-package tasks;
-
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.script.MethodProvider;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WalkToCaveTask extends Task

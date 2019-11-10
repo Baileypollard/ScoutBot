@@ -1,5 +1,3 @@
-package tasks;
-
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;
 import java.io.IOException;
@@ -25,7 +23,7 @@ public class DiscordWebhook {
     private List<EmbedObject> embeds = new ArrayList<>();
 
     /**
-     * Constructs a new tasks.DiscordWebhook instance
+     * Constructs a new DiscordWebhook instance
      *
      * @param url The webhook URL obtained in Discord
      */
@@ -142,7 +140,7 @@ public class DiscordWebhook {
         URL url = new URL(this.url);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.addRequestProperty("Content-Type", "application/json");
-        connection.addRequestProperty("User-Agent", "Java-tasks.DiscordWebhook-BY-Gelox_");
+        connection.addRequestProperty("User-Agent", "Java-DiscordWebhook-BY-Gelox_");
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
 

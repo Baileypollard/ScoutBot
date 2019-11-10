@@ -1,5 +1,3 @@
-package tasks;
-
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.MethodProvider;
 

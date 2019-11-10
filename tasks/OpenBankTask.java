@@ -1,8 +1,5 @@
-package tasks;
-
 import org.osbot.rs07.api.map.constants.Banks;
 import org.osbot.rs07.script.MethodProvider;
-import tasks.Task;
 
 public class OpenBankTask extends Task {
 

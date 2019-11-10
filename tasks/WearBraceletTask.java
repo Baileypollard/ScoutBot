@@ -1,5 +1,3 @@
-package tasks;
-
 import org.osbot.rs07.api.ui.EquipmentSlot;
 import org.osbot.rs07.script.MethodProvider;
 import org.osbot.rs07.utility.ConditionalSleep;

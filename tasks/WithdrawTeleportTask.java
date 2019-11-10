@@ -1,8 +1,5 @@
-package tasks;
-
 import org.osbot.rs07.script.MethodProvider;
 import org.osbot.rs07.utility.ConditionalSleep;
-import tasks.Task;
 
 public class WithdrawTeleportTask extends Task {
 

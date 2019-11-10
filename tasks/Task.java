@@ -1,5 +1,3 @@
-package tasks;
-
 import org.osbot.rs07.script.MethodProvider;
 
 public abstract class Task {
